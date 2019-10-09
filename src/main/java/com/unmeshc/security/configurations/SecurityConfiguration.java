@@ -2,6 +2,8 @@ package com.unmeshc.security.configurations;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -9,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  * Created by uc on 10/9/2019
  */
 @Configuration
+@EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final PasswordEncoder passwordEncoder;
@@ -28,5 +31,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .withUser("khokon")
                     .password(passwordEncoder.encode("khokon"))
                     .roles("ADMIN");
+    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+            .authorizeRequests()
+            .anyRequest()
+            .authenticated()
+            .and()
+//            .httpBasic(); // browser provided login form
+            .formLogin(); // spring security provided login form
     }
 }
