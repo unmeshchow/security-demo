@@ -19,5 +19,8 @@
     </div>
     Logged user: <span sec:authentication="name">Bob</span>
     Role(s): <span sec:authentication="principal.authorities">[ROLE_USER]</span>
+    <form th:action="@{/logout}" method="post">
+        <button type="submit">Logout</button>
+    </form>
 </body>
 </html>
