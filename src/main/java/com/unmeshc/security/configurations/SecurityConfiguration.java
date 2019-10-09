@@ -37,6 +37,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()
+            .antMatchers(PUBLIC).permitAll()
             .anyRequest()
             .authenticated()
             .and()
@@ -45,5 +46,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .loginPage("/login").permitAll() // custom login form
             .and()
             .logout().permitAll();
+
+        // for accessing h2 web console
+        http.csrf().disable();
+        http.headers().frameOptions().disable();
     }
+
+    private String[] PUBLIC = {
+        "/h2-console/**"
+    };
 }
