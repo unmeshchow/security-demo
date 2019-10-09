@@ -41,6 +41,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .authenticated()
             .and()
 //            .httpBasic(); // browser provided login form
-            .formLogin(); // spring security provided login form
+            .formLogin() // spring security provided login form
+                .loginPage("/login").permitAll(); // custom login form
     }
 }
